@@ -1,44 +1,37 @@
 # Information Security – Exam Cheat Sheet
-## From IS-03: Vulnerabilities → Communication Encryption
 
 ---
 
 # IS-03 – Vulnerabilities & Attacks
 
-## 1. What Is a Vulnerability?
-A **vulnerability** is a weakness in:
-- software
-- hardware
-- configuration
-- protocols
-- human behavior
+## 1. Vulnerabilities
+A vulnerability is a weakness in:
+- Software
+- Hardware
+- Configuration
+- Protocols
+- Human behavior
 
-that can be **exploited by an attacker**.
-
-### Common sources
-- Programming errors (buffer overflow)
-- Missing input validation
-- Weak authentication
-- Misconfiguration
-- Outdated software
+That can be exploited to violate:
+- Confidentiality
+- Integrity
+- Availability
 
 ---
 
 ## 2. Buffer Overflow
 
 ### Definition
-A buffer overflow occurs when:
-- more data is written into memory than allocated
-- adjacent memory is overwritten
+Occurs when more data is written to a buffer than allocated.
 
-### Why dangerous
-- Overwrites return addresses
-- Allows execution of injected shellcode
-- Can lead to **root/admin access**
+### Impact
+- Overwrite return addresses
+- Execute injected shellcode
+- Gain root/admin privileges
 
-### Typical exploitation steps
-1. Identify vulnerable program
-2. Find buffer size
+### Typical Exploitation
+1. Find vulnerable program
+2. Determine buffer size
 3. Overwrite instruction pointer
 4. Inject shellcode
 5. Gain control
@@ -46,104 +39,109 @@ A buffer overflow occurs when:
 ### Mitigations
 - Stack canaries
 - ASLR
-- DEP / NX bit
-- Safe programming languages
+- DEP / NX
+- Safe languages
 
 ---
 
 ## 3. Web Vulnerabilities
 
 ### Cross-Site Scripting (XSS)
+- Cause: missing input validation / output encoding
+- Types:
+  - Stored
+  - Reflected
+  - DOM-based
+- Impact:
+  - Cookie theft
+  - Session hijacking
+- Prevention:
+  - Output encoding
+  - CSP
+  - Avoid `innerHTML`
 
-#### Definition
-Injection of malicious scripts into trusted websites, executed in the victim’s browser.
-
-#### Root cause
-- Missing input validation
-- Missing output encoding
-
-#### Types
-- **Stored XSS**: script stored on server (most dangerous)
-- **Reflected XSS**: script reflected via request
-- **DOM-based XSS**: client-side JS manipulation
-
-#### Impact
-- Cookie theft
-- Session hijacking
-- Phishing
-- User impersonation
-
-#### Prevention
-- Input validation
-- Output encoding
-- Content Security Policy (CSP)
-- Avoid `innerHTML`
+### SQL Injection
+- Cause: user input concatenated into SQL queries
+- Impact:
+  - Auth bypass
+  - Data theft
+- Prevention:
+  - Prepared statements
+  - Parameterized queries
 
 ---
 
-### SQL Injection (SQLi)
+# IS-04 – Encryption
 
-#### Definition
-Injection of SQL code via user input.
-
-#### Root cause
-- Concatenating user input into SQL queries
-
-#### Impact
-- Authentication bypass
-- Data theft
-- Database manipulation
-
-#### Prevention
-- Prepared statements
-- Parameterized queries
-- Least-privilege DB accounts
+## Encryption Goals
+- Confidentiality
+- Integrity
+- Authentication
+- Non-repudiation
 
 ---
+
+## Symmetric Encryption
+- Same key for encrypt/decrypt
+- Fast
+- Key distribution problem
+- Example: AES
+- Secure modes: CBC, GCM
+- Insecure: ECB
+
+---
+
+## Asymmetric Encryption
+- Public key encrypts
+- Private key decrypts
+- Solves key distribution
+- Slower than symmetric
+- Example: RSA, ECC
+
+---
+
+## Hybrid Encryption
+- Asymmetric → key exchange
+- Symmetric → data encryption
+- Used in TLS, HTTPS, VPNs
+
+---
+
+## Diffie–Hellman
+- Secure key agreement
+- No key transmitted
+- No authentication → MITM possible
+
+---
+
+## Certificates (PKI)
+- Bind identity to public key
+- Signed by CA
+- Trust depends on CA
+- Used in HTTPS
+
 
 # IS-05 – System Security & Malware
 
-## 4. Malware Overview
+## 11. Malware
 
-### Malware = malicious software
-
-#### Main types
+### Types
 - Virus
 - Worm
 - Trojan
 - Rootkit
-- Spyware
 - Ransomware
-- Botnet malware
+- Spyware
+
+### Rootkits
+- Hide malware
+- Modify kernel or system tools
+- System cannot be trusted after infection
 
 ---
 
-## 5. Malware Types
-
-### Virus
-- Attaches to host file
-- Needs execution
-- Spreads by infecting files
-
-### Worm
-- Standalone
-- Self-spreading via networks
-- Fast propagation
-
-### Trojan
-- Disguised as legitimate software
-- Installs malware silently
-
-### Rootkit
-- Hides malware
-- Modifies OS/kernel
-- System can no longer be trusted
-
----
-
-## 6. Botnets
-- Network of infected machines
-- Controlled via C&C
+## 12. Botnets
+- Infected machines controlled remotely
 - Used for:
   - DDoS
   - Spam
@@ -151,72 +149,59 @@ Injection of SQL code via user input.
 
 ---
 
-## 7. Targeted Attacks / APT
-- Advanced Persistent Threats
-- Long-term, stealthy
+## 13. APT (Advanced Persistent Threat)
+- Long-term
+- Stealthy
 - Often state-sponsored
-- Use zero-days
+- Uses zero-days
 
 ---
 
 # IS-06 – Authentication
 
-## 8. Authentication Basics
+## 14. Authentication Basics
 
 ### Definition
 Authentication = **Who are you?**
 
-### Authentication factors
-- Something you know (password)
-- Something you have (token)
-- Something you are (biometrics)
+### Factors
+- Knowledge
+- Possession
+- Biometrics
 
 ### MFA
-- Combines ≥2 factors
+- ≥ 2 factors
 - Best practice
 
 ---
 
-## 9. Biometrics
-- Physiological: fingerprint, face
-- Behavioral: voice, typing
-
-### Issues
-- Cannot be changed
-- Privacy risks
-- Should not be used alone
-
----
-
-## 10. Cryptographic Authentication
+## 15. Cryptographic Authentication
 
 ### Challenge–Response
-- Server sends nonce
-- Client proves secret knowledge
+- Uses nonces
+- Prevents replay attacks
 
 ### Needham–Schroeder (Symmetric)
 - Uses trusted Authentication Server
-- Provides authentication + session key
+- Distributes session keys
 - Uses nonces
 - Basis of Kerberos
 
 ---
 
-## 11. Diffie–Hellman
+## 16. Diffie–Hellman vs Needham–Schroeder
 
-### Purpose
-- Secure key exchange over insecure network
-
-### Properties
-- No trusted third party
-- No authentication
-- Vulnerable to MITM
+| Aspect | DH | NS |
+|----|----|----|
+| Key exchange | Yes | Yes |
+| Authentication | No | Yes |
+| Trusted server | No | Yes |
 
 ---
 
 # IS-07 – Authorization
 
-## 12. Authorization Basics
+## 17. Authorization Basics
 
 ### Definition
 Authorization = **What are you allowed to do?**
@@ -227,37 +212,35 @@ Authorization = **What are you allowed to do?**
 
 ---
 
-## 13. Access Control Models
+## 18. Access Control Models
 
 ### Access Control Matrix
 - Subjects × Objects × Rights
 
 ### ACLs
-- Stored with objects
 - Object-centric
 
 ### Capabilities
-- Stored with subjects
+- Subject-centric
 - Possession = permission
 
 ---
 
-## 14. OS Authorization
+## 19. OS Authorization
 
 ### Unix/Linux
-- ACLs in inode
-- File descriptor acts as capability
+- Inode ACLs
+- File descriptors as capabilities
 
 ### Windows
 - Security Descriptors
-- DACL, SACL
+- DACL / SACL
 - Deny > Allow
 
 ---
 
-## 15. Kerberos
-- Authentication + Authorization
-- Trusted KDC
+## 20. Kerberos
+- Centralized authentication & authorization
 - Ticket-based
 - Single Sign-On
 
@@ -265,7 +248,7 @@ Authorization = **What are you allowed to do?**
 
 # IS-08 – Communication Encryption
 
-## 16. Why Encryption Is Needed
+## 21. Why Communication Encryption Is Needed
 IP provides:
 - ❌ No confidentiality
 - ❌ No integrity
@@ -273,7 +256,7 @@ IP provides:
 
 ---
 
-## 17. IPsec
+## 22. IPsec
 
 ### Layer
 - Network layer
@@ -284,52 +267,37 @@ IP provides:
 
 ### Protocols
 - AH: integrity/authentication
-- ESP: encryption (+ auth)
+- ESP: encryption + authentication
 
 ### Key Management
 - IKE / IKEv2
 
-### Use case
+### Use
 - VPNs
 
 ---
 
-## 18. TLS
+## 23. TLS
 
 ### Layer
 - Transport layer
 
 ### Used by
 - HTTPS
-- Mail protocols
+- Secure email
 
-### Components
-- Handshake
-- Record
-- Alert
-
-### Secure versions
-- TLS 1.2
-- TLS 1.3 (recommended)
-
----
-
-## 19. IPsec vs TLS
-
-| Aspect | IPsec | TLS |
-|----|----|----|
-| Layer | Network | Transport |
-| Scope | All traffic | Application traffic |
-| Use | VPN | Web/apps |
+### Versions
+- TLS 1.2 ✅
+- TLS 1.3 ✅ (recommended)
 
 ---
 
 # FINAL EXAM TAKEAWAYS
 
 - Vulnerabilities enable attacks
-- Input validation is critical
-- Malware is the main attack vehicle
+- Encryption alone ≠ trust
+- Certificates bind identity to keys
+- DH exchanges keys, NS authenticates
 - Authentication ≠ Authorization
-- Encryption ≠ Trust
-- Protocol design matters
 - MFA + modern crypto is best practice
+- IPsec secures networks, TLS secures applications
