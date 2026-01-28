@@ -1,69 +1,120 @@
-# Probability — Quick Exam Triggers
+# Probability — Ultra-Compact Exam Triggers
 
-## Law of Total Probability
-Use when:
-- event happens via **groups/categories**
-Formula:
-P(B) = Σ P(B|Aᵢ)P(Aᵢ)
+## Discrete Random Variables
+Mean:
+E(X) = Σ x·P(X=x)
 
----
+Variance:
+Var(X) = E(X²) − [E(X)]²
 
-## Bayes’ Theorem
-Use when:
-- **“Given that …”** and you must find the cause
-Formula:
-P(Aᵢ|B) = P(B|Aᵢ)P(Aᵢ) / Σ P(B|Aⱼ)P(Aⱼ)
+Std Dev:
+σ = √Var(X)
 
 ---
 
-## Conditional Probability
-P(A|B) = P(A∩B) / P(B)
+## Functions of RVs (Y = Φ(X))
+Distribution:
+P(Y=y) = P(X such that Φ(X)=y)
+
+Expectation:
+E(Φ(X)) = Σ Φ(x)·P(X=x)
 
 ---
 
-## Independence
-Check with:
-P(A∩B) = P(A)P(B)
+## Linear Properties
+E(X+Y) = E(X) + E(Y)  
+E(aX+b) = aE(X)+b  
 
-Repeated trials ⇒ multiply probabilities.
-
----
-
-## Binomial / Coin Tosses
-n trials, k successes:
-P(X=k) = C(n,k)pᵏ(1−p)ⁿ⁻ᵏ
-
-“At least one” ⇒ 1 − P(0)
+Var(aX+b) = a²Var(X)
 
 ---
 
-## Multiple Categories (gender, class, party, coin type)
-Always:
-1. Compute **total probability**
-2. Then apply Bayes
+## Standardization
+Z = (X − μ) / σ  
+⇒ E(Z)=0, Var(Z)=1
 
 ---
 
-## Sequences (games, tosses)
-Ordered outcomes:
-P(sequence) = product of step probabilities
+## Joint Distributions
+Joint pmf:
+h(x,y) = P(X=x, Y=y)
 
-Unordered (any order):
-Multiply by number of permutations
-
----
-
-## Independence vs Dependence (children problems)
-- 3 children ⇒ often independent
-- 2 children ⇒ often dependent
+Marginals:
+f(x)=Σ h(x,y)  
+g(y)=Σ h(x,y)
 
 ---
 
-## Boxes / Separate Experiments
-Different boxes ⇒ independent  
-Same box ⇒ dependent
+## Independence (Discrete)
+X ⟂ Y ⇔ h(x,y)=f(x)g(y)
+
+Covariance:
+cov(X,Y)=E(XY)−E(X)E(Y)
+
+Independent ⇒ cov(X,Y)=0
 
 ---
 
-## Exam Tip
-**If it says “Given that…” → Bayes**
+## Sums of RVs
+Z = X + Y
+
+E(Z)=E(X)+E(Y)
+
+Var(Z)=Var(X)+Var(Y)+2cov(X,Y)
+
+If independent:
+Var(Z)=Var(X)+Var(Y)
+
+---
+
+## Binomial Distribution
+X ~ Bin(n,p)
+
+P(X=k)=C(n,k)pᵏ(1−p)ⁿ⁻ᵏ
+
+Mean:
+E(X)=np
+
+Variance:
+Var(X)=np(1−p)
+
+“At least one”:
+1 − P(0)
+
+---
+
+## Sample with Replacement
+Trials independent  
+⇒ Binomial model applies
+
+---
+
+## Normal Distribution
+X ~ N(μ,σ)
+
+Standardize:
+Z = (X−μ)/σ
+
+Use normal table with Z
+
+---
+
+## Empirical Rule (Quick)
+±1σ → ~68%  
+±2σ → ~95%  
+±3σ → ~99.7%
+
+---
+
+## Normal → Counts
+Expected number:
+N · P(interval)
+
+---
+
+## Exam Auto-Triggers
+“Given that …” → Bayes  
+“Total / overall” → Law of Total Probability  
+“Sum of RVs” → Expectation linearity  
+“Independent?” → Check joint = product  
+“Between / less than” → Z-scores
